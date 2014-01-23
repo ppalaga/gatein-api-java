@@ -26,13 +26,14 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 import org.gatein.api.EntityAlreadyExistsException;
+import org.gatein.api.common.Attributes;
 import org.gatein.api.common.LocalizedDisplayable;
 import org.gatein.api.page.PageId;
 
 /**
  * A node object which represents the current state of a node retrieved from the portal. All changes to the node are not saved
  * until {@link Navigation#saveNode(Node)} is called.
- * 
+ *
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
@@ -139,6 +140,18 @@ public interface Node extends LocalizedDisplayable, Iterable<Node>, Serializable
      * @param pageId the page id or null
      */
     void setPageId(PageId pageId);
+
+    /**
+     * TODO: Javadoc
+     * never returns null
+     *
+     * Changes through NodeAttributes are not saved until {@link Navigation#saveNode(Node)} is
+     * called.
+     *
+     * @return
+     */
+    Attributes getAttributes();
+
 
     /**
      * If this node is the root node of the navigation.
