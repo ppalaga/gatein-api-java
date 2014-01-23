@@ -34,7 +34,7 @@ import org.gatein.api.internal.Parameters;
  * Implements Map<String, String> and adds convinience methods to retrieve a <code>String</code> property converted into a
  * specific type. The {@link #get(Key)}, {@link #put(Key, Object)} and {@link #remove(Key)} methods converts <code>String</code>
  * values to/from the instances of the class specified by {@link Key#type}.
- * 
+ *
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
@@ -73,7 +73,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
 
     /**
      * Creates a new attributes instance and adds all attributes from the specified map
-     * 
+     *
      * @param values the map of attributes to add
      */
     public Attributes(Map<String, String> values) {
@@ -83,7 +83,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
     /**
      * Returns the value to the which the specified key name is mapped. The value is returned as the type specified by the key
      * type
-     * 
+     *
      * @param key the key for the attribute
      * @return the converted value
      * @throws IllegalArgumentException if the specified key is null, or the value failed to convert into to key type
@@ -115,7 +115,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
 
     /**
      * Converts the value into a String using the <code>toString</code> method
-     * 
+     *
      * @param key the key for the attribute
      * @param value the value
      * @return the previous value, or null if it didn't exist
@@ -139,7 +139,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
 
     /**
      * Removes the attribute that is mapped to the specified key name
-     * 
+     *
      * @param key the key for the the attribute
      * @return the previous value, or null if it didn't exist
      * @throws IllegalArgumentException if the specified key is null, or the current value is non-null and failed to to convert
@@ -157,7 +157,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
      * Creates a key with the specified name and type. The type class has to either be {@link String} or implement a static
      * method <code>valueOf(String)</code> method as specified in {@link Attributes#get(Key)}. The <code>valueOf</code> method
      * should convert the string parameter into an instance of type and return it.
-     * 
+     *
      * @param name the key name
      * @param type the key type
      * @return the key
@@ -175,7 +175,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
         return new Key<T>(name, type);
     }
 
-    private <T> T fromString(Class<T> type, String value) {
+    protected static <T> T fromString(Class<T> type, String value) {
         if (type.equals(String.class)) {
             return (T) value;
         }
@@ -189,7 +189,7 @@ public class Attributes extends HashMap<String, String> implements Serializable 
         }
     }
 
-    private <T> String toString(Class<T> type, T value) {
+    protected static <T> String toString(Class<T> type, T value) {
         if (value instanceof String) {
             return (String) value;
         }
