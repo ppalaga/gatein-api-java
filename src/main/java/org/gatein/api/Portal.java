@@ -22,9 +22,11 @@
 
 package org.gatein.api;
 
+import org.gatein.api.application.ApplicationRegistry;
 import org.gatein.api.navigation.Navigation;
 import org.gatein.api.oauth.OAuthProvider;
 import org.gatein.api.page.Page;
+import org.gatein.api.composition.PageBuilder;
 import org.gatein.api.page.PageId;
 import org.gatein.api.page.PageQuery;
 import org.gatein.api.site.Site;
@@ -119,6 +121,12 @@ public interface Portal {
     Navigation getNavigation(SiteId siteId);
 
     /**
+     * Returns a representation of the Application Registry.
+     * @return a representation of the Application Registry.
+     */
+    ApplicationRegistry getApplicationRegistry();
+
+    /**
      * Returns the page of a site given the <code>PageId</code>. Can return null if the page does not exist.
      *
      * @param pageId the page id
@@ -188,4 +196,10 @@ public interface Portal {
      * @return OAuth provider or null if OAuth provider with given key was not found
      */
     OAuthProvider getOAuthProvider(String oauthProviderKey);
+
+    /**
+     * Returns a new {@link org.gatein.api.composition.PageBuilder} instance, so that pages can be composed and persisted.
+     * @return a new instance of the default implementation for PageBuilder
+     */
+    PageBuilder newPageBuilder();
 }
