@@ -3,8 +3,6 @@ package org.gatein.api.composition;
 import org.gatein.api.page.Page;
 import org.gatein.api.security.Permission;
 
-import java.util.List;
-
 /**
  *
  * This is the starting point when starting the usage of the Compose Page API. Once a builder is obtained from the
@@ -98,10 +96,10 @@ public interface PageBuilder extends LayoutBuilder<PageBuilder> {
      * decide that it's better to have Permission#everyone by default, at a later version, might be an admin. Or even
      * an IllegalStateException. It is good practice to *always* provide this when composing a page.
      *
-     * @param moveAppsPermissions the list of move apps permissions for this page
+     * @param moveAppsPermission the list of move apps permissions for this page
      * @return this builder
      */
-    PageBuilder moveAppsPermissions(List<String> moveAppsPermissions);
+    PageBuilder moveAppsPermission(Permission moveAppsPermission);
 
     /**
      * Sets the move containers permissions for this page. This information should be always provided. Failure to provide this
@@ -109,10 +107,10 @@ public interface PageBuilder extends LayoutBuilder<PageBuilder> {
      * decide that it's better to have Permission#everyone by default, at a later version, might be an admin. Or even
      * an IllegalStateException. It is good practice to *always* provide this when composing a page.
      *
-     * @param moveContainersPermissions the list of move containers permissions for this page
+     * @param moveContainersPermission the list of move containers permissions for this page
      * @return this builder
      */
-    PageBuilder moveContainersPermissions(List<String> moveContainersPermissions);
+    PageBuilder moveContainersPermission(Permission moveContainersPermission);
 
     /**
      * <b>Required</b>

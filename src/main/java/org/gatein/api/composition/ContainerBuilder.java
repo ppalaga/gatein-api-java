@@ -2,6 +2,8 @@ package org.gatein.api.composition;
 
 import java.util.List;
 
+import org.gatein.api.security.Permission;
+
 /**
  * Basic builder for {@link Container}'s.
  *
@@ -105,26 +107,26 @@ public interface ContainerBuilder<T> {
      * Sets the access permissions for this container. This is optional, and it uses the main {@link LayoutBuilder}'s
      * access permissions as default.
      *
-     * @param accessPermissions the access permission for this container
+     * @param accessPermission the access permission for this container
      * @return this builder
      */
-    public ContainerBuilder<T> accessPermissions(List<String> accessPermissions);
+    public ContainerBuilder<T> accessPermission(Permission accessPermission);
 
     /**
      * Sets the move apps permissions for this container. This is optional, and it uses the main {@link LayoutBuilder}'s
      * move apps permissions as default.
      *
-     * @param moveAppsPermissions the list of move apps permissions for this container
+     * @param moveAppsPermission the list of move apps permissions for this container
      * @return this builder
      */
-    public ContainerBuilder<T> moveAppsPermissions(List<String> moveAppsPermissions);
+    public ContainerBuilder<T> moveAppsPermission(Permission moveAppsPermission);
 
     /**
      * Sets the move containers permissions for this container. This is optional, and it uses the main {@link LayoutBuilder}'s
      * move containers permissions as default.
      *
-     * @param moveContainersPermissions the list of move containers permissions for this container
+     * @param moveContainersPermission the list of move containers permissions for this container
      * @return this builder
      */
-    public ContainerBuilder<T> moveContainersPermissions(List<String> moveContainersPermissions);
+    public ContainerBuilder<T> moveContainersPermission(Permission moveContainersPermission);
 }
