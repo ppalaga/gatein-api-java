@@ -105,10 +105,10 @@ public interface ContainerBuilder<T> {
      * Sets the access permissions for this container. This is optional, and it uses the main {@link LayoutBuilder}'s
      * access permissions as default.
      *
-     * @param accessPermission the access permission for this container
+     * @param accessPermissions the access permission for this container
      * @return this builder
      */
-    public ContainerBuilder<T> accessPermission(List<String> accessPermission);
+    public ContainerBuilder<T> accessPermissions(List<String> accessPermissions);
 
     /**
      * Sets the move apps permissions for this container. This is optional, and it uses the main {@link LayoutBuilder}'s
