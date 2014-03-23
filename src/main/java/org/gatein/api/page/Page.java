@@ -40,49 +40,35 @@ import org.gatein.api.site.SiteId;
 public interface Page extends Container, Displayable, Describable, Comparable<Page>, Serializable {
     /**
      * The id of the page
-     * 
+     *
      * @return the id
      */
     PageId getId();
 
     /**
      * The id of the site the page belongs to
-     * 
+     *
      * @return the site id
      */
     SiteId getSiteId();
 
     /**
      * The name of the page
-     * 
+     *
      * @return the name
      */
     String getName();
 
     /**
-     * The permissions that represents what users are allowed to access the page
-     * 
-     * @return the access permission
-     */
-    Permission getAccessPermission();
-
-    /**
-     * Sets the access permission
-     * 
-     * @param permission the access permission
-     */
-    void setAccessPermission(Permission permission);
-
-    /**
      * The permissions that represents what users are allowed to modify the page
-     * 
+     *
      * @return the edit permission
      */
     Permission getEditPermission();
 
     /**
      * Sets the edit permission
-     * 
+     *
      * @param permission the edit permission
      */
     void setEditPermission(Permission permission);

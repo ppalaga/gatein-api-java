@@ -2,6 +2,8 @@ package org.gatein.api.composition;
 
 import java.util.List;
 
+import org.gatein.api.security.Permission;
+
 /**
  *
  * A Container represents a block of content to be displayed on a page. It contains a list of
@@ -38,39 +40,42 @@ public interface Container extends ContainerItem {
      */
     public void setTemplate(String template);
 
-    /**
-     * Gets the access permissions for this container.
-     * @return an String array containing the access permissions
-     */
-    public String[] getAccessPermissions();
 
     /**
-     * Sets the access permissions for this container
-     * @param accessPermissions    the String array with the permissions
+     * Gets a permission object that represents which users are allowed to access this container.
+     *
+     * @return the access permission
      */
-    public void setAccessPermissions(String[] accessPermissions);
+    Permission getAccessPermission();
+
+    /**
+     * Sets the access permission
+     *
+     * @param permission the access permission
+     */
+    void setAccessPermission(Permission permission);
 
     /**
      * Gets the move apps permissions for this container.
      * @return an String array containing the move apps permissions
      */
-    public String[] getMoveAppsPermissions();
+    public Permission getMoveAppsPermission();
 
     /**
      * Sets the move apps permissions for this container
-     * @param moveAppsPermissions    the String array with the move apps permissions
+     * @param moveAppsPermission    the String array with the move apps permissions
      */
-    public void setMoveAppsPermissions(String[] moveAppsPermissions);
+    public void setMoveAppsPermission(Permission moveAppsPermission);
 
     /**
      * Gets the move apps permissions for this container.
      * @return an String array containing the move apps permissions
      */
-    public String[] getMoveContainersPermissions();
+    public Permission getMoveContainersPermission();
 
     /**
      * Sets the move container permissions for this container
-     * @param moveContainersPermissions    the String array with the move container permissions
+     * @param moveContainersPermission    the String array with the move container permissions
      */
-    public void setMoveContainersPermissions(String[] moveContainersPermissions);
+    public void setMoveContainersPermission(Permission moveContainersPermission);
 }
