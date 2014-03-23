@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T>    the target top-level builder class
  * @author <a href="mailto:jpkroehling+javadoc@redhat.com">Juraci Paixão Kröhling</a>
  */
-public interface LayoutBuilder<T extends LayoutBuilder> {
+public interface LayoutBuilder<T extends LayoutBuilder<T>> {
 
     /**
      * Starts a new builder, using the column template. Children added to this new builder will be rendered as
