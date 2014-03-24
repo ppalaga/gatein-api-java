@@ -1,9 +1,9 @@
 package org.gatein.api.application;
 
 import org.gatein.api.composition.ContainerItem;
+import org.gatein.api.security.Permission;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * A record in the Application Registry. Currently, there are types of applications as defined
@@ -70,10 +70,10 @@ public interface Application extends ContainerItem {
     Date getModifiedDate();
 
     /**
-     * A list of the access permissions for this application
-     * @return a list of the access permissions for this application
+     * Gets a permission object that represents which users are allowed to access this container.
+     * @return the access permissions for this application
      */
-    List<String> getAccessPermissions();
+    Permission getAccessPermission();
 
     /**
      * The title of this application
