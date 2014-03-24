@@ -5,7 +5,7 @@ import java.util.List;
 import org.gatein.api.security.Permission;
 
 /**
- * Basic builder for {@link Container}'s.
+ * Basic builder for {@link Container}s.
  *
  * The basic flow of calls to this should be:
  * <ul>

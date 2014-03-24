@@ -22,10 +22,12 @@
 
 package org.gatein.api;
 
+import org.gatein.api.application.Application;
 import org.gatein.api.application.ApplicationRegistry;
 import org.gatein.api.navigation.Navigation;
 import org.gatein.api.oauth.OAuthProvider;
 import org.gatein.api.page.Page;
+import org.gatein.api.composition.Container;
 import org.gatein.api.composition.PageBuilder;
 import org.gatein.api.page.PageId;
 import org.gatein.api.page.PageQuery;
@@ -40,7 +42,7 @@ import java.util.List;
 /**
  * The main interface of the portal public API. This is available from the <code>PortalRequest</code> object which can be
  * obtained from {@link PortalRequest#getInstance()}.
- * 
+ *
  * @author <a href="mailto:nscavell@redhat.com">Nick Scavelli</a>
  * @author <a href="mailto:sthorger@redhat.com">Stian Thorgersen</a>
  */
@@ -198,7 +200,11 @@ public interface Portal {
     OAuthProvider getOAuthProvider(String oauthProviderKey);
 
     /**
-     * Returns a new {@link org.gatein.api.composition.PageBuilder} instance, so that pages can be composed and persisted.
+     * Returns a new {@link org.gatein.api.composition.PageBuilder} instance, which can be used to
+     * compose page content out of {@link Container}s and {@link Application}s. Note that the page built
+     * through a {@link PageBuilder} page is not saved until
+     * {@link Portal#savePage(org.gatein.api.page.Page)} is called.
+     *
      * @return a new instance of the default implementation for PageBuilder
      */
     PageBuilder newPageBuilder();

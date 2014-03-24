@@ -1,57 +1,79 @@
 package org.gatein.api.composition;
 
+import org.gatein.api.Portal;
 import org.gatein.api.page.Page;
 import org.gatein.api.security.Permission;
 
 /**
  *
- * This is the starting point when starting the usage of the Compose Page API. Once a builder is obtained from the
- * {@link org.gatein.api.Portal}, the caller can start configuring a {@link Page}. At the end of the process,
- * the caller can obtain the resulting {@link Page} representation by calling {@link PageBuilder#build()}.
- *
- * This builder gives access also to a {@link ContainerBuilder}, which allows the specification of the layout of the
- * page, in terms of {@link Container} (columns, rows, applications, ...).
- *
- * The simplest example for building a {@link Page}, and the usual case when there's only one portlet inside of it, is:
- *
+ * A starting point of the Page Composition API. An instance is typically obtained from {@link Portal}:
  * <pre>
- *     {@code
- *     Page page = pageBuilder.child(gadgetCalculator).siteName(siteName).siteType(siteType).name(pageName).build();
- *     }
+ *     Portal myPortal = PortalRequest.getInstance().getPortal();
+ *     PageBuilder myPageBuilder = myPortal.newPageBuilder();
  * </pre>
  *
- * When completing, the resulting {@link Page} object can be persisted using the
+ * <p>
+ * There are two main kinds scenarios possible:
+ * <ol>
+ * <li>
+ *      <strong>Flat</strong>
+ *      <pre>
+ *      Page myPage = myPageBuilder
+ *              .child(gadgetCalculator) // first row
+ *              .child(helloWorldPortlet) // second row
+ *              .siteName(siteName)
+ *              .siteType(siteType)
+ *              .name("myFlatPage")
+ *              .build(); // creates a new Page
+ *      </pre>
+ * </li>
+ * <li>
+ *      <strong>With nested containers</strong>
+ *      <pre>
+ *      Page myPage = myPageBuilder
+ *              .child(gadgetCalculator) // first row of the page
+ *              .newColumnsBuilder() // a couple of columns in the second row of the page
+ *                   .child(storyOfTheDayPortlet) // first column
+ *                   .child(productListPortlet) // second column
+ *              .build() // finishes the columns
+ *              .buildChildren() // returns the top level PageBuilder
+ *              .child(helloWorldPortlet) // third row of the page
+ *              .siteName(siteName)
+ *              .siteType(siteType)
+ *              .name("myComplexPage")
+ *              .build(); // creates a new Page
+ *      </pre>
+ *      See also {@link ContainerBuilder#newColumnsBuilder()}, {@link ContainerBuilder#newRowsBuilder()} and newRowsBuilder
+ * </li>
+ * </ol>
+ *
+ * Note that the resulting {@link Page} object needs to be persisted using the
  * {@link org.gatein.api.Portal#savePage(Page)} method. See more examples on the usage
  * of this API on the documentation and quickstart.
  *
  * @see org.gatein.api.Portal#newPageBuilder()
  * @see org.gatein.api.Portal#savePage(Page)
+ *
  * @author <a href="mailto:jpkroehling+javadoc@redhat.com">Juraci Paixão Kröhling</a>
  */
 public interface PageBuilder extends LayoutBuilder<PageBuilder> {
 
     /**
-     * <b>Optional</b>
-     * <p>
-     * Sets a description for this page.
+     * Optionally sets a description for this page.
      * @param description the description to set
      * @return this builder
      */
     PageBuilder description(String description);
 
     /**
-     * <b>Required</b>
-     * <p>
-     * Sets the site name to which this page belongs to
+     * Required: Sets the site name to which this page belongs to
      * @param siteName the site name
      * @return this builder
      */
     PageBuilder siteName(String siteName);
 
     /**
-     * <b>Optional</b>
-     * <p>
-     * The display name of this page.
+     * Optionally sets the display name of this page.
      *
      * @param displayName the display name
      * @return this builder
@@ -59,9 +81,7 @@ public interface PageBuilder extends LayoutBuilder<PageBuilder> {
     PageBuilder displayName(String displayName);
 
     /**
-     * <b>Optional</b>
-     * <p>
-     * Whether this page should show the "maximize window" option.
+     * Optionally sets whether this page should be shown in the "maximized window" mode.
      *
      * @param showMaxWindow the boolean indicating if the option should be shown
      * @return this builder

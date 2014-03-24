@@ -6,8 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A record in the Application Registry,
- * as available on the User Interface under "Group > Administration > Application Registry"
+ * A record in the Application Registry. Currently, there are types of applications as defined
+ * in {@link ApplicationType}: Portlet, WSRP Portlet and Gadget.
+ * <p>
+ * The same concept is available in the User Interface under "Group > Administration > Application Registry"
  *
  * @author <a href="mailto:jpkroehling+javadoc@redhat.com">Juraci Paixão Kröhling</a>
  */
@@ -32,13 +34,13 @@ public interface Application extends ContainerItem {
     String getCategoryName();
 
     /**
-     * The type of this application. Ex.: WSRP, Portlet, Gadget
+     * The type of this application, e.g. WSRP, Portlet, Gadget
      * @return the type of this application
      */
     ApplicationType getType();
 
     /**
-     * The display name for this application. Ex.: Awesome page
+     * The display name for this application, e.g. "My awesome portlet"
      * @return the display name of this application
      */
     String getDisplayName();
@@ -56,14 +58,14 @@ public interface Application extends ContainerItem {
     String getIconURL();
 
     /**
-     * The date this application was created at the registry.
-     * @return the date this application was created at the registry.
+     * The date this application was created in the registry.
+     * @return the date this application was created in the registry.
      */
     Date getCreatedDate();
 
     /**
-     * The date this application was last modified at the registry.
-     * @return the date this application was last modified at the registry.
+     * The date this application was last modified in the registry.
+     * @return the date this application was last modified in the registry.
      */
     Date getModifiedDate();
 

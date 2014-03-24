@@ -2,22 +2,27 @@ package org.gatein.api.composition;
 
 import java.util.List;
 
+import org.gatein.api.application.Application;
+import org.gatein.api.page.Page;
 import org.gatein.api.security.Permission;
 
 /**
  *
- * A Container represents a block of content to be displayed on a page. It contains a list of
- * {@link ContainerItem}s, which can be other
- * {@link Container}'s or an {@link org.gatein.api.application.Application}.
+ * A block of content to be displayed on a {@link Page}. Its main responsibility is to provide
+ * a template that renders the children of this {@link Container} in the user interface.
+ * <p>
+ * The children are supposed to implement the {@link ContainerItem} interface. There are two
+ * subinterfaces available at present: {@link Application} and {@link Container}.
  *
  * @author <a href="mailto:jpkroehling+javadoc@redhat.com">Juraci Paixão Kröhling</a>
  */
 public interface Container extends ContainerItem {
 
     /**
-     * Returns all the {@link org.gatein.api.composition.ContainerItem}s included on this container.
-     * It is legal to change the returned list and it will be persisted during the persistence calls, for instance,
-     * at {@link org.gatein.api.Portal#savePage(org.gatein.api.page.Page)}
+     * Returns all child {@link org.gatein.api.composition.ContainerItem}s included in this container.
+     * Returns a reference to the internal modifiable instance. Therefore, it is legal to change
+     * the returned list but note that any changes are not persisted until you
+     * call e.g. {@link org.gatein.api.Portal#savePage(org.gatein.api.page.Page)}.
      *
      * @return  The children of this container
      */
@@ -49,33 +54,35 @@ public interface Container extends ContainerItem {
     Permission getAccessPermission();
 
     /**
-     * Sets the access permission
+     * Sets the access permission.
      *
      * @param permission the access permission
      */
     void setAccessPermission(Permission permission);
 
     /**
-     * Gets the move apps permissions for this container.
-     * @return an String array containing the move apps permissions
+     * Gets a permission object that represents which users are allowed to perform move, add
+     * and remove operations with child {@link Application}s of this {@link Container}.
+     * @return the move apps permission
      */
     public Permission getMoveAppsPermission();
 
     /**
-     * Sets the move apps permissions for this container
-     * @param moveAppsPermission    the String array with the move apps permissions
+     * Sets the move apps permission for this container.
+     * @param moveAppsPermission    the move apps permission
      */
     public void setMoveAppsPermission(Permission moveAppsPermission);
 
     /**
-     * Gets the move apps permissions for this container.
-     * @return an String array containing the move apps permissions
+     * Gets a permission object that represents which users are allowed to perform move, add
+     * and remove operations with child {@link Container}s of this {@link Container}.
+     * @return the move containers permission
      */
     public Permission getMoveContainersPermission();
 
     /**
-     * Sets the move container permissions for this container
-     * @param moveContainersPermission    the String array with the move container permissions
+     * Sets the move container permission for this container.
+     * @param moveContainersPermission    the move containers permission
      */
     public void setMoveContainersPermission(Permission moveContainersPermission);
 }
