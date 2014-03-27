@@ -22,14 +22,17 @@
 package org.gatein.api.common;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Before;
 import org.junit.Test;
 
 public class AttributesTest {
 
-    private Attributes attributes;
+    protected Attributes attributes;
 
     @Before
     public void before() {
@@ -64,10 +67,14 @@ public class AttributesTest {
         assertNull(attributes.get(Attributes.key("my.prop", Integer.class)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void get_IntegerWrongType() {
         attributes.put("my.prop", "string");
-        attributes.get(Attributes.key("my.prop", Integer.class));
+        try {
+            attributes.get(Attributes.key("my.prop", Integer.class));
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException expected) {
+        }
     }
 
     @Test
@@ -76,9 +83,13 @@ public class AttributesTest {
         assertEquals("true", attributes.get(Attributes.key("my.prop", String.class)));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void key_InvalidType() {
-        Attributes.key("my.prop", Object.class);
+        try {
+            Attributes.key("my.prop", Object.class);
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException expected) {
+        }
     }
 
     @Test
@@ -100,21 +111,56 @@ public class AttributesTest {
         assertEquals("20", attributes.get("my.prop"));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void put_OverrideInvalidType() {
-        attributes.put("my.prop", "string");
-        attributes.put(Attributes.key("my.prop", Integer.class), new Integer(20));
+        try {
+            attributes.put("my.prop", "string");
+            attributes.put(Attributes.key("my.prop", Integer.class), new Integer(20));
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException expected) {
+        }
     }
 
     @Test
     public void remove() {
+        assertEquals(0, attributes.size());
         attributes.put("my.prop", "10");
+        assertEquals(1, attributes.size());
         assertEquals(new Integer(10), attributes.remove(Attributes.key("my.prop", Integer.class)));
+        assertEquals(0, attributes.size());
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void remove_InvalidType() {
-        attributes.put("my.prop", "string");
-        attributes.remove(Attributes.key("my.prop", Integer.class));
+    @Test
+    public void remove_ThroughSettingNull() {
+        assertEquals(0, attributes.size());
+        attributes.put("my.prop", "10");
+        assertEquals(1, attributes.size());
+        attributes.put(Attributes.key("my.prop", Integer.class), null);
+        assertEquals(0, attributes.size());
     }
+
+    @Test
+    public void remove_InvalidType() {
+        assertEquals(0, attributes.size());
+        attributes.put("my.prop", "string");
+        assertEquals(1, attributes.size());
+        try {
+            attributes.remove(Attributes.key("my.prop", Integer.class));
+            fail("IllegalArgumentException expected");
+        } catch (IllegalArgumentException expected) {
+        }
+        assertEquals(1, attributes.size());
+    }
+
+    @Test
+    public void containsKey() {
+        assertEquals(0, attributes.size());
+        attributes.put("my.prop", "string");
+        assertTrue(attributes.containsKey("my.prop"));
+        assertTrue(attributes.containsKey(Attributes.key("my.prop", String.class)));
+        /* not there with improper type */
+        assertFalse(attributes.containsKey(Attributes.key("my.prop", Integer.class)));
+    }
+
+
 }
